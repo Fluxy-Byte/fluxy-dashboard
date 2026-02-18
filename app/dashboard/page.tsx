@@ -14,6 +14,17 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import {
+  Drawer,
+  DrawerClose,
+  DrawerContent,
+  DrawerDescription,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer"
+import { Button } from "@/components/ui/button"
+import {
   Item,
   ItemContent,
   ItemDescription,
@@ -21,7 +32,7 @@ import {
   ItemTitle,
 } from "@/components/ui/item";
 import { getWabas } from "@/app/services/waba";
-import type { WabaWithContacts } from "@/lib/waba.interface";
+import type { WabaWithContacts, Contacts } from "@/lib/waba.interface";
 import { User } from "lucide-react"
 
 export default function DashboardPage() {
@@ -30,6 +41,7 @@ export default function DashboardPage() {
   const [idOrganization, setIdOrganization] = useState<string | null>(null);
   const [wabas, setWabas] = useState<WabaWithContacts[]>([]);
   const [agente, setAgente] = useState<WabaWithContacts | null>(null);
+  const [contact, setContact] = useState<Contacts | null>(null);
 
   useEffect(() => {
     if (idOrganization) {
@@ -142,25 +154,61 @@ export default function DashboardPage() {
               </SelectGroup>
             </SelectContent>
           </Select>
-          
+
           <p>Contatos encontrados:</p>
           <div className="flex gap-6">
             {agente && agente.contacts.map((c) => (
-              <Item className="border-neutral-200 max-w-md shadow-md">
-                <ItemMedia variant="icon">
-                  <User />
-                </ItemMedia>
-                <ItemContent>
-                  <ItemTitle>{c.name ?? "Nome não coletado"}</ItemTitle>
-                  <ItemDescription>
-                    {c.phone} - {c.leadGoal ?? "Sem dados do lead"}
-                  </ItemDescription>
-                </ItemContent>
+              <Item key={c.id} onClick={() => setContact(c)} className="border-neutral-200 max-w-md shadow-md">
+                <div className="flex gap-4">
+                  <ItemMedia variant="icon">
+                    <User />
+                  </ItemMedia>
+                  <ItemContent>
+                    <ItemTitle>{c.name ?? "Nome não coletado"}</ItemTitle>
+                    <ItemDescription>
+                      {c.phone} - {c.leadGoal ?? "Sem dados do lead"}
+                    </ItemDescription>
+                  </ItemContent>
+                </div>
+                <Drawer direction="right">
+                  <DrawerTrigger asChild>
+                    <Button variant="outline">Ver conversa</Button>
+                  </DrawerTrigger>
+                  <DrawerContent>
+                    <DrawerHeader>
+                      <DrawerTitle>Move Goal</DrawerTitle>
+                      <DrawerDescription>Set your daily activity goal.</DrawerDescription>
+                    </DrawerHeader>
+                    <div className="no-scrollbar overflow-y-auto px-4">
+                      {Array.from({ length: 10 }).map((_, index) => (
+                        <p
+                          key={index}
+                          className="style-lyra:mb-2 style-lyra:leading-relaxed mb-4 leading-normal"
+                        >
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do
+                          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+                          enim ad minim veniam, quis nostrud exercitation ullamco laboris
+                          nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+                          reprehenderit in voluptate velit esse cillum dolore eu fugiat
+                          nulla pariatur. Excepteur sint occaecat cupidatat non proident,
+                          sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        </p>
+                      ))}
+                    </div>
+                    <DrawerFooter>
+                      <DrawerClose asChild>
+                        <Button variant="outline">Fechar</Button>
+                      </DrawerClose>
+                    </DrawerFooter>
+                  </DrawerContent>
+                </Drawer>
               </Item>
 
             )
             )}
           </div>
+
+
 
         </CardContent>
       </Card>
