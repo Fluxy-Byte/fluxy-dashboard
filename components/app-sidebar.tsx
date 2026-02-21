@@ -4,6 +4,7 @@ import * as React from "react"
 import {
   LayoutDashboard,
   Megaphone,
+  Cog,
   LogOut,
   User,
 } from "lucide-react"
@@ -43,6 +44,11 @@ const menuItems = [
     title: "Campaign",
     url: "/dashboard/campaign",
     icon: Megaphone,
+  },
+  {
+    title: "Configurações",
+    url: "/dashboard/configurations",
+    icon: Cog,
   },
 ]
 

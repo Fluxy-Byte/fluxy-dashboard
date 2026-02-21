@@ -80,7 +80,6 @@ model Organization {
   metadata    String?
   invitations Invitation[]
   members     Member[]
-  waba        Waba[]
 }
 
 model Member {
@@ -90,6 +89,7 @@ model Member {
   role           String       @default("member")
   createdAt      DateTime     @default(now())
   updatedAt      DateTime     @updatedAt
+
   organization   Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -114,56 +114,4 @@ model Invitation {
   @@unique([organizationId, email])
   @@index([organizationId])
   @@index([email])
-}
-
-model Waba {
-  id                 String       @id @default(cuid())
-  phoneNumberId      String       @unique
-  displayPhoneNumber String       @unique
-  organizationId     String
-  agentId            String
-  contacts           Contact[]
-  agent              Agent        @relation(fields: [agentId], references: [id], onDelete: Cascade)
-  organization       Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-
-  @@map("waba")
-}
-
-model Contact {
-  id                    String    @id @default(cuid())
-  name                  String?
-  email                 String?
-  phone                 String    @unique
-  leadGoal              String?
-  startDateConversation DateTime  @default(now())
-  lastDateConversation  DateTime? @default(now())
-  wabaId                String
-  waba                  Waba      @relation(fields: [wabaId], references: [id], onDelete: Cascade)
-
-  @@map("contact")
-}
-
-model Agent {
-  id       String  @id @default(cuid())
-  name     String  @unique
-  url      String
-  mensagem String?
-  wabas    Waba[]
-
-  @@map("agent")
-}
-
-model Rdstation {
-  id            String  @id @default(cuid())
-  access_token  String
-  token_type    String
-  expires_in    Int
-  refresh_token String  @unique
-  expires_at    String?
-  name          String  @unique
-}
-
-enum Role {
-  MEMBER
-  ADMIN
 }

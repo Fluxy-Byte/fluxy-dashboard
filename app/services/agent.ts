@@ -1,24 +1,24 @@
 import axios from "axios"
-import type { Waba } from "@/lib/database.interface";
+import type { Agent } from "@/lib/database.interface";
 
 interface Result {
     status: boolean,
-    wabas: Waba[]
+    agent: Agent[]
     message: string
 }
 
 interface ResultSimple {
     status: boolean,
-    waba: Waba | null
+    agent: Agent | null
     message: string
 }
 
-export async function getWabas(id: string): Promise<Result> {
+export async function getAgents(organization_id: string): Promise<Result> {
     try {
         const url = process.env.NEXT_API_URL_BACKEND ?? "https://fluxe-orquestrador.egnehl.easypanel.host";
 
         const { data } = await axios.get(
-            `${url}/api/v1/list-wabas?organization_id=${id}`
+            `${url}/api/v1/agent?organization_id=${organization_id}`
         )
 
         return data;
@@ -26,23 +26,23 @@ export async function getWabas(id: string): Promise<Result> {
         console.error(e);
         return {
             status: false,
-            wabas: [],
+            agent: [],
             message: "Erro inesperado na consulta de wabas"
         }
     }
 }
 
-export async function createWaba(phone_number_id: string, display_phone_number: string, idOrganization: string, idAgente: number): Promise<ResultSimple> {
+export async function createAgent(name: string, urlAgente: string, idOrganization: string): Promise<ResultSimple> {
+    console.log(name, urlAgente, idOrganization)
     try {
         const url = process.env.NEXT_API_URL_BACKEND ?? "https://fluxe-orquestrador.egnehl.easypanel.host";
 
         const { data } = await axios.post(
-            `${url}/api/v1/waba`,
+            `${url}/api/v1/agent`,
             {
-                "phone_number_id": phone_number_id,
-                "display_phone_number": display_phone_number,
-                "idOrganization": idOrganization,
-                "idAgente": idAgente
+                "name": name,
+                "url": urlAgente,
+                "organizationId": idOrganization
             }
         )
 
@@ -51,22 +51,23 @@ export async function createWaba(phone_number_id: string, display_phone_number: 
         console.error(e);
         return {
             status: false,
-            waba: null,
+            agent: null,
             message: "Erro inesperado na criação do wabas"
         }
     }
 }
 
-export async function updateWaba(phone_number_id: string, display_phone_number: string, idOrganization: string, idAgente: number): Promise<ResultSimple> {
+export async function updateAgent(name: string, urlAgente: string, mensagem: string, idOrganization: string, idAgente: string): Promise<ResultSimple> {
     try {
         const url = process.env.NEXT_API_URL_BACKEND ?? "https://fluxe-orquestrador.egnehl.easypanel.host";
 
         const { data } = await axios.put(
-            `${url}/api/v1/waba?phone_number_id=${phone_number_id}`,
+            `${url}/api/v1/agent?id_agent=${idAgente}`,
             {
-                "displayPhoneNumber": display_phone_number,
-                "organizationId": idOrganization,
-                "agentId": idAgente
+                "name": name,
+                "url": urlAgente,
+                "mensagem": mensagem,
+                "organizationId": idOrganization
             }
         )
 
@@ -75,8 +76,8 @@ export async function updateWaba(phone_number_id: string, display_phone_number: 
         console.error(e);
         return {
             status: false,
-            waba: null,
-            message: "Erro inesperado na atualização do waba"
+            agent: null,
+            message: "Erro inesperado na atualização do agente"
         }
     }
 }
