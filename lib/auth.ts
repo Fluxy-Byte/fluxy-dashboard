@@ -21,7 +21,7 @@ export const auth = betterAuth({
       organizationLimit: 5,
     }),
   ],
-  trustedOrigins: [process.env.BETTER_AUTH_URL || "http://localhost:5210"],
-  secret: process.env.BETTER_AUTH_SECRET!,
-  baseURL: process.env.BETTER_AUTH_URL!,
+  trustedOrigins: [process.env.NEXT_BETTER_AUTH_URL || "http://localhost:5210"],
+  secret: process.env.NEXT_BETTER_AUTH_SECRET!,
+  baseURL: process.env.NEXT_BETTER_AUTH_URL!,
 })
