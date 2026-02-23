@@ -21,7 +21,7 @@ export const auth = betterAuth({
       organizationLimit: 5,
     }),
   ],
-  trustedOrigins: [process.env.NEXT_BETTER_AUTH_URL || "http://localhost:5210"],
+  trustedOrigins: [process.env.NEXT_BETTER_AUTH_URL || "https://fluxy.egnehl.easypanel.host"],
   secret: process.env.NEXT_BETTER_AUTH_SECRET!,
   baseURL: process.env.NEXT_BETTER_AUTH_URL!,
 })
