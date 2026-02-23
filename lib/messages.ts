@@ -117,9 +117,10 @@ export async function coletarHistorico(
   await connectMongo();
 
   const mensagens = await Message.find({ id_user, id_agent })
-    .sort({ createdAt: -1 })
+    .sort({ date_recept_message: 1 })
     .lean();
 
+  console.log(mensagens)
   return mensagens;
 }
 
