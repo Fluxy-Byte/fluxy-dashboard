@@ -118,7 +118,7 @@ export default function Wabas(prosp: Props) {
                         <AlertDialogTrigger asChild>
                             <Button>
                                 <Phone />
-                                {w.displayPhoneNumber}
+                                {w.displayPhoneNumber} - {w.agent?.name}
                             </Button>
                         </AlertDialogTrigger>
 

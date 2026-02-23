@@ -70,7 +70,7 @@ export function AppSidebar() {
             <LayoutDashboard className="h-5 w-5" />
           </div>
           <div>
-            <p className="text-sm font-semibold">Campaign Manager</p>
+            <p className="text-sm font-semibold">Fluxy Technologies</p>
             <p className="text-xs text-muted-foreground">Gerenciamento</p>
           </div>
         </div>
