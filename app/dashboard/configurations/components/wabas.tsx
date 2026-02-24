@@ -28,7 +28,7 @@ import {
     SelectValue,
 } from "@/components/ui/select";
 
-import { Phone } from "lucide-react";
+import { Phone, BotMessageSquare } from "lucide-react";
 
 import type { Waba, Agent } from "@/lib/database.interface";
 import { updateWaba } from "@/app/services/waba";
@@ -116,9 +116,8 @@ export default function Wabas(prosp: Props) {
                         }}
                     >
                         <AlertDialogTrigger asChild>
-                            <Button>
-                                <Phone />
-                                {w.displayPhoneNumber} - {w.agent?.name}
+                            <Button className="gap-3">
+                                <Phone />{w.displayPhoneNumber} <span className="flex gap-1 justify-center items-center">(<BotMessageSquare />{w.agent?.name} )</span>
                             </Button>
                         </AlertDialogTrigger>
 

@@ -217,7 +217,7 @@ export default function Details({ id }: { id: string }) {
                     <div className="flex justify-between">
 
                         <div className="flex flex-col gap-2">
-                            <CardTitle>Seus wabas 📱</CardTitle>
+                            <CardTitle>Seus números ativos 📱</CardTitle>
                             <CardDescription>
                                 Configure seus numeros e waba de atendimento
                             </CardDescription>
